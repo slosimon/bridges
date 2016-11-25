@@ -1,0 +1,56 @@
+from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from baza.models import Most
+from django.contrib.auth.decorators import login_required
+#from baza.forms import Dodaj
+from django.forms.models import modelformset_factory
+# Create your views here.
+#def index(request):
+#	latest_most=Most.objects.order_by('-ime')[:5]
+#	template=loader.get_tempate('baza/idenx.html')
+#	context = RequestContext(request,{'latest_most':latest_most,})
+#	output=', '.join([p.tip_proge for p in latest_most])
+#	return HttpResponse(template.render(context))
+import datetime
+
+def index(request):
+    mostovi=Most.objects.order_by('ime')
+    context = {'mostovi':mostovi}
+#    try:
+#    	news=Novica.objects.get(pk=ime)	
+    return render(request, 'baza/index.html',context)
+    #return render(request,'baza/index.html',{'mostovi':mostovi})
+
+@login_required    
+def dodaj_most(request):
+	MostFormSet=modelformset_factory(Most,fields='__all__')
+	if request.method=='POST':
+		formset=MostFormSet(request.POST)
+		if formset.is_valid():
+			formset.save(commit=True)
+			return index(request)
+	else:
+		formset=MostFormSet()
+	return render(request,"baza/dodaj_most.html",{'formset':formset})
+
+@login_required
+def most(request, most_ime_slug):
+
+    # Create a context dictionary which we can pass to the template rendering engine.
+    context_dict = {}
+
+    #try:
+        # Can we find a category name slug with the given name?
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        # So the .get() method returns one model instance or raises an exception.
+        most = Most.objects.get(slug=most_ime_slug)
+        context_dict['ime_mostu'] = most.ime
+
+    #except Most.DoesNotExist:
+        # We get here if we didn't find the specified category.
+        # Don't do anything - the template displays the "no category" message for us.
+        #pass
+
+    # Go render the response and return it to the client.
+    return render(request, 'baza/most.html', context_dict)

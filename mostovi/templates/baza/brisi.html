@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+{%if user.is_authenticated%}
+<h1> Dokončno izbrišem? </h1>
+        <form action="http://pokreativnipoti.fgg.uni-lj.si/baza/" method="get">
+            <p>Ali ste prepričani, da želite izbrisati <label class="control-label">{{ most.ime }}</label>?</p>
+			<input type="submit" value="Izbriši"  id="frm1_submit" />
+        </form>
+{%else%}
+	<h1>Za dodajanje mostu morate biti prijavljeni!</h1>
+	<p><a href="http://pokreativnipoti.fgg.uni-lj.si/login/">Prijava</a></p>
+{%endif%}
+{%endblock%}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.username}}!</h3>
+{%endif%}
+{%endblock%}

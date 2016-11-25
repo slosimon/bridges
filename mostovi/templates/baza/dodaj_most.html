@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+{%if user.is_authenticated%}
+<h1> Vnesi nov most </h1>
+        <form id="most_form" method="post" action="/baza/dodaj_most/">
+
+            {% csrf_token %}
+            {%for field in formset%}
+				<fieldset class="form-group">
+				<label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+				<div class="form-control">
+				<!--<input type="text" class="form-control"
+					name="{{ field.label }}"
+					id="{{ field.name }}"
+					value="{{ field.name }}" >-->
+				{{ field }} 
+				<p class="help-text">{{ field.help_text }} </p>
+				</div>
+				</fieldset>
+			{% endfor %}
+
+            <input type="submit" name="submit" value="Dodaj" />
+        </form>
+{%else%}
+	<h1>Za dodajanje mostu morate biti prijavljeni!</h1>
+	<p><a href="http://pokreativnipoti.fgg.uni-lj.si/login/">Prijava</a></p>
+{%endif%}
+{%endblock%}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.first_name}}!</h3> <hr><hr>
+{%endif%}
+{%endblock%}

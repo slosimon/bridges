@@ -1,0 +1,17 @@
+from django.http import HttpResponse
+import datetime
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    html = "<html><body>It is now %s.</body></html>" % now
+    return HttpResponse(html)from django.shortcuts import render
+from django.http import HttpResponse
+from baza.models import Most
+# Create your views here.
+def index(request):
+	latest_most=Most.objects.order_by('-ime')[:5]
+	template=loader.get_tempate('baza/idenx.html')
+	context = RequestContext(request,{'latest_most':latest_most,})
+	output=', '.join([p.tip_proge for p in latest_most])
+	return HttpResponse(template.render(context))
+

@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{%load tags%}
+{% block body %}
+<script type="text/javascript">
+// Popup window code
+function newPopup(url) {
+	popupWindow = window.open(
+		url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=no,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=no')
+}
+</script>
+<img src="http://pokreativnipoti.fgg.uni-lj.si/media/SVP.jpg" width="650" border="0" alt="">
+<center>
+<a class="button" style="background: #F5E81D; box-shadow: none;width:30%;" href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/ljubljana/');">Ljubljana</a>
+<a class="button" style="background: #FF7D00; box-shadow: none;width:30% " href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/maribor/');">Maribor</a>
+<a class="button" style="background: #FF0069; box-shadow: none;width:30% " href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/celje/');">Celje</a>
+<a class="button" style="background: #186D1C; box-shadow: none;width:30% " href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/postojna/');">Postojna</a>
+<a class="button" style="background: #66106B; box-shadow: none;width:30% " href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/ljubljana-novo_mesto/');">Ljubljana (Novo mesto)</a>
+<a class="button" style="background: #FF0900; box-shadow: none;width:30% " href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/ljubljana-nova_gorica/');">Ljubljana (Nova Gorica)</a>
+<a class="button" style="background: #040301; box-shadow: none;width:30% " href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/celje-ljubljana/');">Celje (Ljubljana)</a>
+<a class="button" style="background: #000AFC; box-shadow: none;width:30% " href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/SVP/postojna-nova_gorica/');">Postojna (Nova Gorica)</a>
+</center> <br><hr><br>
+<div id="container">
+	<ul>
+	{%for item in slikce%}
+		{%if item.glavna_slika%}
+			<li><a class="hovertext" href="http://pokreativnipoti.fgg.uni-lj.si/baza/most/{{item.id}}" title="{{item.ime}}"><img src="{{item.glavna_slika.url}}" width="525" border="0" alt=""></a></li>
+		{%endif%}
+	{%endfor%}
+	</ul>
+	<span class="button prevButton"></span>
+	<span class="button nextButton"></span>
+	</div>	
+	<hr><br>
+<h2>Sheme prog</h2>
+<h3><a class="button" href="/glavne/">Glavne proge</a></h3>
+<br>
+<h3><a class="button" href="/regionalne/">Regionalne proge</a></h3>
+<br>
+<br>
+<hr>
+{%for item in novice %}
+<br>
+	<h2>{{item.ime}}</h2>
+	<p style="text-align:justify">{{item.novica}}</p>
+	<hr>
+{%endfor %}
+{% endblock %}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.first_name}}!</h3>
+        <hr>
+        <hr>
+{%endif%}
+{%endblock%}
+{%block glava%}
+<script src="http://pokreativnipoti.fgg.uni-lj.si/static/jquery-1.4.2.min.js"></script>
+<script>
+$(window).load(function(){
+		var pages = $('#container li'), current=0;
+		var currentPage,nextPage;
+		var timeoutID;
+		var buttonClicked=0;
+
+		var handler1=function(){
+			buttonClicked=1;
+			$('#container .button').unbind('click');
+			currentPage= pages.eq(current);
+			if($(this).hasClass('prevButton'))
+			{
+				if (current <= 0)
+					current=pages.length-1;
+					else
+					current=current-1;
+			}
+			else
+			{
+
+				if (current >= pages.length-1)
+					current=0;
+				else
+					current=current+1;
+			}
+			nextPage = pages.eq(current);	
+			currentPage.fadeTo('slow',0.3,function(){
+				nextPage.fadeIn('slow',function(){
+					nextPage.css("opacity",1);
+					currentPage.hide();
+					currentPage.css("opacity",1);
+					$('#container .button').bind('click',handler1);
+				});	
+			});			
+		}
+
+		var handler2=function(){
+			if (buttonClicked==0)
+			{
+			$('#container .button').unbind('click');
+			currentPage= pages.eq(current);
+			if (current >= pages.length-1)
+				current=0;
+			else
+				current=current+1;
+			nextPage = pages.eq(current);	
+			currentPage.fadeTo('slow',0.3,function(){
+				nextPage.fadeIn('slow',function(){
+					nextPage.css("opacity",1);
+					currentPage.hide();
+					currentPage.css("opacity",1);
+					$('#container .button').bind('click',handler1);				
+				});	
+			});
+			timeoutID=setTimeout(function(){
+				handler2();	
+			}, 4000);
+			}
+		}
+
+		$('#container .button').click(function(){
+			clearTimeout(timeoutID);
+			handler1();
+		});
+
+		timeoutID=setTimeout(function(){
+			handler2();	
+			}, 500);
+		
+});
+</script>
+<style type="text/css">
+#container{
+		width:604px;
+		height:453px;
+		position:relative;
+	}
+
+	#container ul{
+		width:604px;
+		height:453px;
+		list-style:none outside none;
+		position:relative;
+		overflow:hidden;
+	}
+	#container li:first-child{
+		display:list-item;
+		position:absolute;
+	}
+
+	#container li{
+		position:absolute;
+		display:none;
+	}
+	#container .prevButton{
+		height:72px;
+		width:68px;
+		position:absolute;
+		background:url('http://pokreativnipoti.fgg.uni-lj.si/static/buttons.png') no-repeat;
+		top:50%;
+		margin-top:-36px;
+		cursor:pointer;
+		z-index:2000;
+		background-position:left top;
+		left:0
+	}
+
+	#container .prevButton:hover{ 
+			background-position:left bottom;left:0;
+		}
+		#container .nextButton{
+	height:72px;
+	width:68px;
+	position:absolute;
+	background:url('http://pokreativnipoti.fgg.uni-lj.si/static/buttons.png') no-repeat;
+	top:50%;
+	margin-top:-36px;
+	cursor:pointer;
+	z-index:2000;
+	background-position:right top;
+	right:0
+}
+
+#container .nextButton:hover{background-position:right bottom;right:0;}
+  a.hovertext {
+    position: relative;
+    width: 525px;
+    text-decoration: none !important;
+    text-align: center;
+  }
+  a.hovertext:after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0.5em 20px;
+    width: 485px;
+    background: rgba(0,0,0,0.8);
+    text-decoration: none !important;
+    color: #fff;
+    opacity: 0;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -ms-transition: 0.5s;
+  }
+  a.hovertext:hover:after, a.hovertext:focus:after {
+    opacity: 1.5;
+  }
+
+</style>
+{%endblock%}

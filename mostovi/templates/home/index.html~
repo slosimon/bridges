@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block body %}
+<script type="text/javascript">
+// Popup window code
+function newPopup(url) {
+	popupWindow = window.open(
+		url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=no,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=no')
+}
+</script>
+<a href="JavaScript:newPopup('http://pokreativnipoti.fgg.uni-lj.si/baza/');">Ljubljana</a>
+{%for item in novice %}
+	<h2>{{item.ime}}</h2>
+	<p style="text-align:justify">{{item.novica}}</p>
+	<hr>
+{%endfor %}
+{% endblock %}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.first_name}}!</h3>
+        <hr>
+        <hr>
+{%endif%}
+{%endblock%}
+

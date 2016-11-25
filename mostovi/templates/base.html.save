@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/    xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Polls</title>
+    <link rel="alternate" type="application/rss+xml"
+          title="RSS Feed"  href="/feeds/polls/" />
+    <style>
+      /static/html.css
+    </style>
+  </head>
+  <body>
+    <!-- start header -->
+    <div id="header">
+      <div id="logo">
+        <h1><a href="/baza/">Ocena</a></h1>
+        <p>Stran</a></p>
+      </div>
+      <div id="menu">
+        <ul>
+          <li><a href="/baza/">Domov</a></li>
+          <li><a href="/about/">O nas</a></li>
+          <li><a href="/admin/">Ureajnje baze</a></li>
+        </ul>
+      </div>
+    </div>
+<!-- end header -->
+<!-- start page -->
+    <div id="page">
+    <!-- start content -->
+      <div id="content">
+        {% block content %} {% endblock %}
+      </div>
+<!-- end content -->
+      <br style="clear: both;" />
+    </div>
+<!-- end page -->
+<!-- start footer -->
+    <div id="footer">
+      <p class="legal">
+        &copy;2015 &nbsp;&bull;&nbsp;&nbsp;
+        Design by
+        Simon Weiss
+        &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+    </div>
+<!-- end footer -->
+  </body>
+</html>
+

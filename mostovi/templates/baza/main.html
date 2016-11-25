@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+	<h3><a href="/baza/seznam/" class="button">Seznam mostov</a></h3>
+	{%if user.is_staff%}
+		<h3><a href="/baza/dodaj_most/" class="button">Dodaj nov most</a></h3>
+		
+	{%endif%}
+	<h3><a href="/baza/statistika/" class="button">Statistika</a></h3>
+	<h3><a href="/baza/iskanje/" class="button">Iskalnik mostov</a></h3>
+{% endblock %}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.first_name}}!</h3> <hr><hr>
+{%endif%}
+{%endblock%}

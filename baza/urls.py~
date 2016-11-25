@@ -1,0 +1,9 @@
+from django.conf.urls import patterns,url
+
+from baza import views
+
+urlpatterns = patterns('',
+	url(r'^$',views.index, name='Baza mostov'),
+	url(r'^dodaj_most/$',views.dodaj_most,name='Dodaj Most'),
+   url(r'^most/(?P<most_ime_slug>[\w\-]+)/$', views.most, name='Most'),
+)

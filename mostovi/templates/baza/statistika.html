@@ -1,0 +1,217 @@
+{%extends 'base.html'%}
+{% load tags %}
+{%block glava%}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Območje SVP', 'Mostov'],
+          ['Ljubljana',     {{lj.count}}],
+          ['Maribor',     {{mb.count}} ],
+          ['Celje',  {{ce.count}}],
+		  ['Postojna', {{po.count}}],
+          ['Celje (Ljubljana)', {{celj.count}}],
+		  ['Postojna (Nova Gorica)', {{pong.count}}],
+          ['Ljubljana (Nova Gorica)', {{ljng.count}}],
+          ['Ljubljana (Novo mesto)',    {{ljnm.count}}]
+        ]);
+
+        var options = {
+          title: 'Pogostost mostov na območju SVP'
+        };
+		
+        var chart = new google.visualization.PieChart(document.getElementById('SVP'));
+
+        chart.draw(data, options);
+      }
+	function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+          ['Most', 'Številka proge']
+          {%for item in mostovi%}
+          ,['{{item.ime}}', {{item.stevilka_proge}}]
+          {%endfor%}
+          ]);
+
+        var options = {
+          title: 'Mostovi na posamezni progi',
+          legend: { position: 'none' },
+          vAxis:{gridlines:{count:4}},
+          hAxis: {showTextEvery: 10, title:'Št. proge'},
+          histogram: { bucketSize: 1 }
+        };
+		
+        var chart = new google.visualization.Histogram(document.getElementById('proga'));
+        chart.draw(data, options);
+      }
+     function drawChart3() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Tip proge', 'Mostov'],
+          ['Glavna',     {{gl.count}}],
+          ['Regionalna',    {{reg.count}}]
+        ]);
+
+        var options = {
+          title: 'Pogostost mostov glede na tip proge'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('tip'));
+
+        chart.draw(data, options);
+      }
+      function drawChart4() {
+        var data = google.visualization.arrayToDataTable([
+          ['Objekt križanja', 'Mostov'],
+          ['Vodotok',     {{va.count}}],
+          ['Potok',     {{pota.count}} ],
+          ['Podvoz',  {{poda.count}}],
+		  ['Podvoz, vodotok in križni objekt', {{pvka.count}}],
+          ['Meteorna voda', {{mva.count}}],
+		  ['Inudacija', {{inua.count}}],
+          ['Inudacija in vodotok', {{iva.count}}],
+          ['Inudacija, podvoz in vodotok', {{ipva.count}}],
+          ['Vodotok in podvoz',    {{vpa.count}}]
+        ]);
+
+        var options = {
+          title: 'Pogostost mostov glede na objekt križanja'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('krizanje'));
+
+        chart.draw(data, options);
+      }
+      function drawChart5() {
+        var data = google.visualization.arrayToDataTable([
+          ['Most', 'Leto gradnje']
+          {%for item in mostovi%}
+          {%if item.leto_gradnje%}
+          ,['{{item.ime}}', {{item.leto_gradnje}}]
+          {%endif%}{%endfor%}
+          ]);
+
+        var options = {
+          title: 'Histogram gradnje',
+          legend: { position: 'none' },
+          histogram: { bucketSize: 5 }
+        };
+
+        var chart = new google.visualization.Histogram(document.getElementById('gradnja'));
+        chart.draw(data, options);
+      }
+      function drawChart6() {
+        var data = google.visualization.arrayToDataTable([
+          ['Most', 'Leto rekonstrukcije']
+          {%for item in mostovi%}
+          {%for leto in item.leto_rekonstrukcije_nov.all %}
+          ,['{{item.ime}}', {{leto.leto}}]
+          {%endfor%}
+          {%endfor%}
+          ]);
+
+        var options = {
+          title: 'Histogram rekonstrukcij',
+          legend: { position: 'none' },
+          vAxis:{gridlines:{count:4}},
+          hAxis:{showTextEvery: 2},
+          histogram: { bucketSize: 5 }
+        };
+
+        var chart = new google.visualization.Histogram(document.getElementById('rekonstrukcija'));
+        chart.draw(data, options);
+      }
+      function drawChart7() {
+        var data = google.visualization.arrayToDataTable([
+          ['Tip konstrukcije', 'Mostov'],
+          ['Branasti nosilec',     {{bna.count}}],
+          ['Dvojni glavni polnostenski nosilec',     {{dgpna.count}} ],
+          ['Jeklen nosilec',  {{jna.count}}],
+		  ['Painer nosilec', {{pna.count}}],
+          ['Palična konstrukcija', {{pkka.count}}],
+		  ['Palična ločna konstrukcija', {{plka.count}}],
+          ['Palični nosilec', {{pana.count}}],
+          ['Palični parabolični nosilec', {{ppna.count}}],
+          ['Plošča z vgrajenimi nosilci',     {{pvna.count}} ],
+          ['Polnostenski nosilec',  {{psna.count}}],
+		  ['Paraboličen polnostenski nosilec', {{ppsna.count}}],
+          ['Prostoležeča plošča', {{ppa.count}}],
+		  ['Škatlasti nosilec', {{sna.count}}],
+          ['Sovprežna plošča z vgrajenimi nosilci', {{spvna.count}}],
+          ['Sovprežna prednapeta konstrukcija', {{spka.count}}],
+          ['Predalčje',    {{predaa.count}}]
+        ]);
+
+        var options = {
+          title: 'Pogostost mostov glede na tip konstrukcije'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('konstrukcija'));
+
+        chart.draw(data, options);
+      }
+       function drawChart8() {
+        var data = google.visualization.arrayToDataTable([
+          ['Statični sistem', 'Mostov'],
+          ['Brana',     {{ba.count}}],
+          ['Kontinuiran nosilec',     {{kna.count}} ],
+          ['Prostoležeči nosilec',  {{pnoa.count}}],
+		  ['Prostoležeča konstrukcija', {{pkoa.count}}],
+          ['Prostoležeča plošča', {{ppla.count}}],
+		  ['Prostoležeča sovprežna plošča', {{pspa.count}}],
+          ['Prostoležeči polnostenski parabolični nosilec', {{pppna.count}}],
+          ['Prostoležeči sovprežni nosilec',    {{psnoa.count}}]
+        ]);
+
+        var options = {
+          title: 'Pogostost mostov glede na statični sistem'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('statika'));
+
+        chart.draw(data, options);
+      }
+
+      function risi()
+      {
+		  drawChart();
+		  drawChart2();
+		  drawChart3();
+		  drawChart4();
+		  drawChart6();
+		  drawChart7();
+		  drawChart8();
+		  drawChart5();
+		}
+      google.setOnLoadCallback(risi);
+    </script>
+{%endblock%}
+{%block body%}
+		<h2>Število vseh vnešenih mostov: {{mostovi.count}}</h2>
+		<hr>
+		<div id="SVP" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<div id="proga" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<div id="tip" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<div id="krizanje" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<h2>Povprečno leto izgradnje mostu je: {{ave_age.leto_gradnje__avg|floatformat:0}}</h2>
+		<hr>
+		<div id="gradnja" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<div id="rekonstrukcija" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<div id="konstrukcija" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<div id="statika" style="width: 650px; height: 220px;"></div>
+		<hr>
+		<h2>Povprečna dolžina mostu je: {{ave_razpon.razpon__avg|floatformat:2 }}m</h2>
+{%endblock%}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.first_name}}!</h3> <hr> <hr>
+{%endif%}
+{%endblock%}

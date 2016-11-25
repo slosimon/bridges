@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block body %}
+{%for item in mostovi %}
+	<h3><a href="/baza/most/{{ item.ime }}/">{{ item.ime }}</a></h3>
+{%endfor %}
+{% endblock %}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.username}}!</h3>
+{%endif%}
+{%endblock%}
+

@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load l10n %}
+{% block body %}
+<h1 style="text-align:center"><font color="red">{{most.ime}}</font></h1>
+{%if most.lokacija_sirina|stringformat:"s" != "46.0" or most.lokacija_dolzina|stringformat:"s" != "14.0" %}
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDOh_kbrMaac8BvjR4dxYoPE02VDW2zVMk&q={{most.lokacija_sirina}},{{most.lokacija_dolzina}}&center=46.119435, 14.837886&zoom=7">
+</iframe>
+{%endif%}
+{%if most.glavna_slika%}
+<p><img src="{{most.glavna_slika.url}}" alt="{{most.ime}}-Slika" style="width:600px"></p>
+{%endif%}
+{%if most.slike%}
+<a href="http://pokreativnipoti.fgg.uni-lj.si/media/{{most.slike}}">Ostale slike</a>
+{%endif%}
+<h3>Območje SVP</h3>
+<p>{%if most.obmocje_SVP|stringformat:"s" == "Ljubljana (Novo Mesto)"%}Ljubljana (Novo mesto) {%else%}{{most.obmocje_SVP}}{%endif%} </p>
+{%if most.stevilka_proge%}
+<h3>Številka proge</h3>
+<p>{{most.stevilka_proge}}</p>
+{%endif%}
+{%if most.proga%}
+<h3>Ime proge</h3>
+<p>{{most.proga}}</p>
+{%endif%}
+<h3>Tip proge</h3>
+<p>{{most.tip_proge}}</p>
+{%if most.odsek%}
+<h3>Odsek</h3>
+<p>{{most.odsek}}</p>
+{%endif%}
+{%if most.objekt_krizanja%}
+<h3>Objekt križanja</h3>
+<p>{{most.objekt_krizanja}}</p>
+{%endif%}
+{%if most.obremenjevanje_data%}
+<h3>Podatki o obremenjevanju</h3>
+<p>{{most.obremenjevanje_data}}</p>
+{%endif%}
+<h3>Tip objekta</h3>
+<p>{{most.tip_objekta}}</p>
+<h3>Tip križanja</h3>
+<p>{%if most.tip_krizanja|stringformat:"s" == "Podvoz, vodotok in krizni objekt"%}
+	Podvoz, vodotok in križni objekt
+{%else%}
+	{{most.tip_krizanja}}
+{%endif%}
+</p>
+<h3>Leto gradnje {%if leta%}in rekonstrukcij{%endif%}</h3>
+{%if most.leto_gradnje%}<p>Gradnja: {{most.leto_gradnje}}</p>{%endif%}
+{%if leta%}
+	<p>Leta rekonstrukcije : 
+	{%for letor in leta%}
+		{{letor.leto}}
+	{%endfor%}</p>
+{%endif%}
+<h3>Tip konstrukcije</h3>
+<p>{%if most.tip_konstrukcije|stringformat:"s" == "Palicna konstrukcija"%}
+	Palična konstrukcija
+{%elif most.tip_konstrukcije|stringformat:"s" == "Palicna locna konstrukcija"%}
+	Palična ločna konstrukcija
+{%elif most.tip_konstrukcije|stringformat:"s" == "Palicni nosilec"%}
+	Palični nosilec
+{%elif most.tip_konstrukcije|stringformat:"s" == "Palicni parabolicni nosilec"%}
+	Palični parabolični nosilec
+{%elif most.tip_konstrukcije|stringformat:"s" == "Plosca z vgrajenimi nosilci"%}
+	Plošča z vgrajenimi nosilci
+{%elif most.tip_konstrukcije|stringformat:"s" == "Parabolicen polnostenski nosilec"%}
+	Paraboličen polnostenski nosilec
+{%elif most.tip_konstrukcije|stringformat:"s" == "Prostolezeca plosca"%}
+	Prostoležeča plošča
+{%elif most.tip_konstrukcije|stringformat:"s" == "Skatlasti nosilec"%}
+	Škatlasti nosilec
+{%elif most.tip_konstrukcije|stringformat:"s" == "Sovprezna plosca z vgrajenimi nosilci"%}
+	Sovprežna plošča z vgrajenimi nosilci
+{%elif most.tip_konstrukcije|stringformat:"s" == "Sovprezna prednapeta konstrukcija"%}
+	Sovprežna prednapeta konstrukcija
+{%elif most.tip_konstrukcije|stringformat:"s" == "Predalcje"%}
+	Predalčje
+{%else%}
+	{{most.tip_konstrukcije}}
+{%endif%}
+	</p>
+<h3>Statični sistem</h3>
+<p>{%if most.staticni_sistem|stringformat:"s" == "Prostolezeci nosilec"%}
+	Prostoležeči nosilec
+{%elif most.staticni_sistem|stringformat:"s" == "Prostolezeca konstrukcija"%}
+	Prostoležeča konstrukcija
+{%elif most.staticni_sistem|stringformat:"s" == "Prostolezeca plosca"%}
+	Prostoležeča plošča
+{%elif most.staticni_sistem|stringformat:"s" == "Prostolezeca sovprezna plosca"%}
+	Prostoležeča sovprežna plošča
+{%elif most.staticni_sistem|stringformat:"s" == "Prostolezeci polnostenski parabolicni nosilec"%}
+	Prostoležeči polnostenski parabolični nosilec
+{%elif most.staticni_sistem|stringformat:"s" == "Prostolezeci sovprezni nosilec"%}
+	Prostoležeči sovprežni nosilec
+{%else%}
+	{{most.staticni_sistem}}
+{%endif%}</p>
+{%if most.razpon%}
+<h3>Dolžina mostu</h3>
+<p>{{most.razpon|localize}}m</p>
+{%endif%}
+{%if most.staticna_razpetina_po_odprtinah%}
+<h3>Statična razpetina po odprtinah</h3>
+<p>{{most.staticna_razpetina_po_odprtinah}}</p>
+{%endif%}
+{%if most.staticna_razpetina_po_poljih%}
+<h3>Statična razpetina po poljih</h3>
+<p>{{most.staticna_razpetina_po_poljih}}</p>
+{%endif%}
+<h3>Material</h3>
+<p>{{most.material}}</p>
+{%if user.is_staff%}
+	{%if most.preostala_doba%}
+	<h3>Preostala življenjska doba</h3>
+	<p>{{most.preostala_doba}}</p>
+	{%endif%}
+	{%if most.dokumentacija%}
+		{%if docs%}
+			<h3>Razpoložljiva dokumentacija</h3>
+			{%for dokumentacija_vsa in docs%}
+				<a href="{{MEDIA_URL}}{{dokumentacija_vsa.dokument}}" class="button">{{dokumentacija_vsa.ime_dokumenta}}</a>
+			{%endfor%}
+		{%else%}
+			<h3>Dokumentacija ni na voljo</h3>
+		{%endif%}
+	{%endif%}
+{%else%}
+	<h3>Za ogled ocene preostale življenjske dobe in dokumentacije morate biti prijavljeni in prositi administratorja za dovoljenje.</h3>
+{%endif%}
+{%if most.valid%}
+	<strong>Podatki so navedeni v skladu s tehničnim poročilom</strong>
+  {%else%}
+	<strong>Podatki niso preverjeni, pridobljeni so s strani Slovenskih železnic d.o.o.</strong>
+{%endif%}
+<br>
+{%if most.lokacija_sirina|stringformat:"s" != "46.0" or most.lokacija_dolzina|stringformat:"s" != "14.0" %}
+<input type="submit" value="Izkaznica mostu" 
+    onclick="window.location='./izkaznica.pdf';" />
+{%endif%}
+{%if user.is_staff%}
+<form action="http://pokreativnipoti.fgg.uni-lj.si/baza/most/{{most.id}}/spremeni/" method="get">
+    <input type="submit" value="Spremeni"  id="frm1_submit" />
+</form>
+{%endif%}
+{%if user.is_staff%}
+<form action="http://pokreativnipoti.fgg.uni-lj.si/baza/most/{{most.id}}/izbrisi/" method="get">
+    <input type="submit" value="Izbriši most"  id="frm1_submit" />
+</form>
+{%endif%}
+{% endblock %}
+{% block top %}
+{% if user.is_authenticated %}
+        <h3>Pozdravljen, {{user.first_name}}!</h3> <hr> <hr>
+{%endif%}
+{%endblock%}
+{%block glava%}
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script>
+meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script>
+var map, marker, waypointByID = {};
+
+function initialize() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 7,
+        center: new google.maps.LatLng(46.118008, 14.838822),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+}
+</script>
+<style>
+    body {font-family: sans-serif}
+    #map {width: 500px; height: 300px}
+</style>
+<SCRIPT type="text/javascript">
+	function validate_tip_o(string s)
+	{
+		var out;
+		if(s="Podvoz, vodotok in krizni objekt")
+		{
+			out="Podvoz, vodotok in križni objekt";
+		}
+		else
+		{
+			out=s;
+		}
+		document.write(out);
+	}
+</SCRIPT>
+{%endblock%}

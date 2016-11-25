@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{%block glava%}{%endblock%}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="http://pokreativnipoti.fgg.uni-lj.si/static/style.css" />
+<title>Ocena stanja železniških mostov</title>
+<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+<script type="text/javascript">
+    window.cookieconsent_options = {"message":"Ta stran uporablja piškotke","dismiss":"Razumem","learnMore":"Več informacij","link":"http://piskotki.net/kaj-so-piskotki-in-kako-delujejo/","theme":"dark-floating"};
+</script>
+
+<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+<!-- End Cookie Consent plugin -->
+</head>
+
+<body>
+    <div id="page">
+      <div id="pagetop">
+		<h1><font size="+2">Železniški mostovi</font></h1>
+        <div class="links">    	
+            <ul>
+           	   	<li><a href="http://pokreativnipoti.fgg.uni-lj.si/">Domov</a></li>
+		{% if user.is_authenticated %}
+               	<li><a href="http://pokreativnipoti.fgg.uni-lj.si/login/logout/">Odjava</a></li>
+		{% else %}
+		<li><a href="http://pokreativnipoti.fgg.uni-lj.si/login/">Prijava</a></li>
+		<li><a href="http://pokreativnipoti.fgg.uni-lj.si/login/register/">Registracija</a></li>
+		{% endif %}
+                <li><a href="http://pokreativnipoti.fgg.uni-lj.si/baza/">Baza mostov</a></li>
+		<li><a href="http://pokreativnipoti.fgg.uni-lj.si/about/">O nas in sponzorjih</a></li>
+            </ul>
+        </div>
+     </div>
+        
+        <div id="header">   Ocena stanja železniških jeklenih mostov s pregledom metodologij za oceno preostale življenjske dobe     </div>
+  
+<div id="main">
+	<div class="content">
+        	<div class="main_top">
+            	{% block top %} {% endblock %}
+            </div>
+            
+           	<div class="main_body">
+                {% block body %} {% endblock %}
+                            </div>
+            
+			</div>
+            <div class="clear">&nbsp;</div>
+        </div>
+<div id="footer">
+        <p>
+        Designed and edited by: <a href="mailto:weiss.simon.1995@gmail.com">Simon Weiss </a>
+        </p>
+                </div>
+<div id="logos">        
+	<p>Powered by:
+        <img src="http://pokreativnipoti.fgg.uni-lj.si/media/poweredbyubuntu.png" style="height:15px" alt="Powered by Ubuntu">
+	<img src="http://pokreativnipoti.fgg.uni-lj.si/media/django.jpg" style="height:15px" alt="Powered by Django and Python">
+	<img src="http://pokreativnipoti.fgg.uni-lj.si/media/apache-logo.png" style="height:15px" alt="Powered by Apache2">
+	<img src="http://pokreativnipoti.fgg.uni-lj.si/media/postgre.jpeg" style="height:15px" alt="Powered by PostgreSQL">
+       </p> </div>
+        
+        </div>
+</body>
+</html>

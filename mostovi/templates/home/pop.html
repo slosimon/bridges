@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{%load tags%}
+{% block body %}
+{% set var = "abc"%}
+{%for item in mostovi %}
+	{%if var != item.obmocje_SVP%}
+		<h2>Mostovi v območju SVP: {%if item.obmocje_SVP|stringformat:"s" == "Ljubljana (Novo Mesto)"%}Ljubljana (Novo mesto) {%else%}{{item.obmocje_SVP}}{%endif%}</h2>
+		{%set var = item.obmocje_SVP %}
+	{%endif%}
+	<h3><a href="/baza/most/{{ item.id }}/" class="button">{{ item.ime }}</a></h3>
+{%endfor %}
+{% endblock %}

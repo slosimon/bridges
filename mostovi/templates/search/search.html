@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block body %}
+    <h2>Iskanje</h2>
+
+    <form method="get" action=".">
+        <table>
+            <th><label for="id_q">Išči:</label></th><td><input id="id_q" name="q" type="search"></td>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit" value="Išči">
+                </td>
+            </tr>
+        </table>
+
+        {% if query %}
+            <h3>Rezultati</h3>
+
+            {% for result in page.object_list %}
+                <p>
+                    <a class="button" href="http://pokreativnipoti.fgg.uni-lj.si/baza/most/{{ result.object.id }}">{{ result.object.ime }}</a>
+                </p>
+            {% empty %}
+                <p>Ni zadetkov.</p>
+            {% endfor %}
+        {% endif %}
+    </form>
+{%endblock%}

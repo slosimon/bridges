@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block top %}
+        <form method="post" action="">
+    {{ formset }}
+</form>
+{%endblock%}

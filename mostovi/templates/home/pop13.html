@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{%load tags%}
+{% block body %}
+{% set var = "abc"%}
+{%for item in mostovi %}
+	{%if var != item.obmocje_SVP%}
+		<h2>Potniški promet</h2>
+			<h3>Zidani Most-Maribor</h3>
+				<img src="http://pokreativnipoti.fgg.uni-lj.si/media/grafi/potniski/zidani_most-maribor.JPG" alt="Graf Zidani Most-Maribor" style="width:600px;"> <hr>
+			<h3>Maribor-Zidani Most</h3>
+				<img src="http://pokreativnipoti.fgg.uni-lj.si/media/grafi/potniski/maribor-zidani_most.JPG" alt="Graf Maribor-Zidani Most" style="width:600px;"> <hr>
+		<h2>Skupni promet</h2>
+			<h3>Koper-Šentilj</h3>
+				<img src="http://pokreativnipoti.fgg.uni-lj.si/media/grafi/tovorni/T_koper-sentilj.JPG" alt="Graf Koper-Šentilj" style="width:600px;"> <hr>
+			<h3>Šentilj-Koper</h3>
+				<img src="http://pokreativnipoti.fgg.uni-lj.si/media/grafi/tovorni/T_ sentilj-koper.JPG" alt="Graf Šentilj-Koper" style="width:600px;"> <hr>
+				
+		<h2>Mostovi na tem območju</h2>
+		{%set var = item.obmocje_SVP%}
+	{%endif%}
+	<h3><a href="/baza/most/{{ item.id }}/" class="button">{{ item.ime }}</a></h3>
+{%endfor %}
+{% endblock %}

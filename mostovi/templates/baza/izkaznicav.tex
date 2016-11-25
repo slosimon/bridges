@@ -1,0 +1,80 @@
+{% autoescape on %}
+\documentclass{article}
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+\usepackage{pagecolor,lipsum}
+\usepackage[utf8]{inputenc} 
+\usepackage[slovene]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[export]{adjustbox}
+\pagestyle{fancy}
+\cfoot{\colorbox{white}{\parbox[b]{470pt}{
+{%if entry.valid%}\textbf{Podatki so navedeni v skladu s tehničnim poročilom}{%else%}\textbf{Podatki niso preverjeni, pridobljeni so s strani Slovenskih železnic d.o.o.}{%endif%}\newline \includegraphics[scale=0.5]{logo-fgg}
+ \includegraphics[scale=0.5]{faks}
+  \includegraphics[scale=0.75]{logo-sklad}
+}}}
+\begin{document}
+\pagecolor{black!10!white}
+\begin{center}
+\end{center}
+\colorbox{white}{\parbox[t]{470pt} %širina okvirčka imena mostu
+{\begin{center}{\LARGE {\textbf{
+{{entry.ime}}
+}}} \end{center}}}
+\newline
+\newline
+\newline
+\colorbox{white}{\parbox[c]{230pt}%barva definirana kot prej, samo da je tu namesto sive bela, širina okvirčka je 230pt, naprej je vse po istem kopitu
+{\begin{center} \includegraphics[width=220pt,height=200pt,keepaspectratio]
+{mapa}
+\end{center}
+}}\colorbox{white}{\parbox[c]{230pt}{\begin{center} \includegraphics[height=110pt,keepaspectratio]
+{most}
+\end{center} } } 
+\newline
+\newline
+\newline {%if entry.besedilo_za_izkaznico%} \colorbox{white}{\parbox[t]{470pt}
+{ {{entry.besedilo_za_izkaznico}} }}
+\newline
+\newline {%endif%}
+\colorbox{white}{\parbox[t]{227pt}{ {\large \textbf{ Informacije o lokaciji: } } } }
+\colorbox{white}{\parbox[t]{227pt}{ {\large \textbf{ Tehnične informacije: } } } }
+\newline
+\colorbox{white}{\parbox[t][5cm]{230pt}{
+{%if entry.lokacija_sirina|stringformat:"s" != "46.0" or entry.lokacija_dolzina|stringformat:"s" != "14.0"%}- Koordinate {{entry.lokacija_sirina}} N, {{entry.lokacija_dolzina}} E\newline{%endif%}
+- Območje (SVP) – {%if entry.obmocje_SVP|stringformat:"s" == "Ljubljana (Novo Mesto)"%}Ljubljana (Novo mesto) {%else%}{{entry.obmocje_SVP}}{%endif%} \newline
+- Proga – {{entry.stevilka_proge}}, {{entry.proga}} \newline
+- Tip proge – {{entry.tip_proge}} \newline
+- Odsek km – {{entry.odsek}} \newline
+- Objekt križanja – {{entry.objekt_krizanja}}\newline
+\newline
+\newline
+\newline
+}}
+\colorbox{white}{\parbox[t][5cm]{230pt}{
+- Tip objekta – {{entry.tip_objekta}} \newline
+- Vrsta križanja – {%if entry.tip_krizanja|stringformat:"s" == "Podvoz, vodotok in krizni objekt"%}Podvoz, vodotok in križni objekt {%else%} {{entry.tip_krizanja}} {%endif%} \newline {%if entry.leto_gradnje%} - Leto gradnje: {{entry.leto_gradnje}} \newline {%endif%} {% if leta%} - Leto rekonstrukcij, sanacij: {% for letor in leta%} {{letor.leto}}; {%endfor%} \newline {%endif%}
+- Vrsta konstrukcije – {%if entry.tip_konstrukcije|stringformat:"s" == "Palicna konstrukcija"%}Palična konstrukcija{%elif entry.tip_konstrukcije|stringformat:"s" == "Palicna locna konstrukcija"%}Palična ločna konstrukcija{%elif entry.tip_konstrukcije|stringformat:"s" == "Palicni nosilec"%}Palični nosilec{%elif entry.tip_konstrukcije|stringformat:"s" == "Palicni parabolicni nosilec"%}Palični parabolični nosilec{%elif entry.tip_konstrukcije|stringformat:"s" == "Plosca z vgrajenimi nosilci"%}Plošča z vgrajenimi nosilci{%elif entry.tip_konstrukcije|stringformat:"s" == "Parabolicen polnostenski nosilec"%}Paraboličen polnostenski nosilec{%elif entry.tip_konstrukcije|stringformat:"s" == "Prostolezeca plosca"%}Prostoležeča plošča{%elif entry.tip_konstrukcije|stringformat:"s" == "Skatlasti nosilec"%}Škatlasti nosilec{%elif entry.tip_konstrukcije|stringformat:"s" == "Sovprezna plosca z vgrajenimi nosilci"%}Sovprežna plošča z vgrajenimi nosilci{%elif entry.tip_konstrukcije|stringformat:"s" == "Sovprezna prednapeta konstrukcija"%}Sovprežna prednapeta konstrukcija{%elif entry.tip_konstrukcije|stringformat:"s" == "Predalcje"%}Predalčje{%else%}{{entry.tip_konstrukcije}}{%endif%} \newline
+- Statični sistem – {%if entry.staticni_sistem|stringformat:"s" == "Prostolezeci nosilec"%}Prostoležeči nosilec{%elif entry.staticni_sistem|stringformat:"s" == "Prostolezeca konstrukcija"%}Prostoležeča konstrukcija{%elif entry.staticni_sistem|stringformat:"s" == "Prostolezeca plosca"%}Prostoležeča plošča{%elif entry.staticni_sistem|stringformat:"s" == "Prostolezeca sovprezna plosca"%}Prostoležeča sovprežna plošča{%elif entry.staticni_sistem|stringformat:"s" == "Prostolezeci polnostenski parabolicni nosilec"%}Prostoležeči polnostenski parabolični nosilec{%elif entry.staticni_sistem|stringformat:"s" == "Prostolezeci sovprezni nosilec"%}Prostoležeči sovprežni nosilec{%else%}{{entry.staticni_sistem}}{%endif%} \newline
+- Dolžina mostu: {{entry.razpon}}m \newline {%if entry.staticna_razpetina_po_odprtinah%}- Svetla razpetina po odprtinah: {{entry.staticna_razpetina_po_odprtinah}} \newline {%endif%} {% if entry.staticna_razpetina_po_poljih%}- Svetla razpetina po poljih: {{entry.staticna_razpetina_po_poljih}} \newline {%endif%}
+- Material prekladne konstrukcije: {{entry.material}}
+}}
+\newline
+\newline
+\newline
+\colorbox{white}{\parbox[t]{465pt}{ { \large \textbf{ Podatki o obremenjevanju: } }\newline
+\url {http://pokreativnipoti.fgg.uni-lj.si/SVP/{%if entry.obmocje_SVP|stringformat:"s" == "Ljubljana"%}ljubljana{%elif entry.obmocje_SVP|stringformat:"s" == "Maribor"%}maribor{%elif entry.obmocje_SVP|stringformat:"s" == "Celje"%}celje{%elif entry.obmocje_SVP|stringformat:"s" == "Postojna"%}postojna{%elif entry.obmocje_SVP|stringformat:"s" == "Ljubljana (Novo Mesto)"%}ljubljana-novo_mesto{%elif entry.obmocje_SVP|stringformat:"s" == "Ljubljana (Nova Gorica"%}ljubljana-nova_gorica{%elif entry.obmocje_SVP|stringformat:"s" == "Postojna (Nova Gorica)"%}postojna-nova_gorica{%else%}celje-ljubljana{%endif%}/}
+} }
+\newline
+\newline
+\newline
+\colorbox{white}{\parbox[t]{465pt}{ {\large \textbf { Dokumentacija je dostopna na spletu za registrirane uporabnike } }
+} }
+\newline
+\newline
+\end{document}
+{% endautoescape %}
